@@ -14,21 +14,27 @@ curve = SubResource("Curve_dfdov")
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
+angle_max = 360.0
 spread = 180.0
 initial_velocity_min = 477.53
 initial_velocity_max = 713.49
 gravity = Vector3(0, 0, 0)
-scale_min = 10.0
-scale_max = 25.0
+scale_min = 0.0
+scale_max = 10.0
 scale_curve = SubResource("CurveTexture_1bcou")
+hue_variation_max = 0.3
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
 
 [node name="Node2D" type="Node2D"]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-modulate = Color(0, 1, 1, 1)
+modulate = Color(1, 0.647059, 0.984314, 1)
 position = Vector2(0, 1)
+scale = Vector2(0.997623, 0.993776)
 emitting = false
-amount = 30
+amount = 50
 process_material = SubResource("ParticleProcessMaterial_evksf")
 lifetime = 0.5
 one_shot = true
