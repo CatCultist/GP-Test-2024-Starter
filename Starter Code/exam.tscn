@@ -1,3 +1,69 @@
-[gd_scene format=3 uid="uid://bunyohpobvu8b"]
+[gd_scene load_steps=8 format=3 uid="uid://bunyohpobvu8b"]
+
+[ext_resource type="Script" path="res://HSlider.gd" id="1_6s4pa"]
+[ext_resource type="Texture2D" uid="uid://rb8smo0f45mc" path="res://icon.svg" id="2_k27jn"]
+[ext_resource type="Script" path="res://testSpawner.gd" id="3_qobqp"]
+[ext_resource type="PackedScene" uid="uid://ba1ain1oqmywr" path="res://boom.tscn" id="4_wkj5j"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4xe8t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4c225"]
+size = Vector2(1.06463, 1.25274)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xflf0"]
 
 [node name="root" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(500, 976)
+scale = Vector2(1468.12, -124.527)
+texture = SubResource("CanvasTexture_4xe8t")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/StaticBody2D"]
+position = Vector2(0.110685, -0.128487)
+shape = SubResource("RectangleShape2D_4c225")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 321.0
+offset_top = 178.0
+offset_right = 361.0
+offset_bottom = 218.0
+
+[node name="HSlider" type="HSlider" parent="Control"]
+offset_right = 300.0
+offset_bottom = 16.0
+max_value = 20.0
+tick_count = 20
+script = ExtResource("1_6s4pa")
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_top = 34.0
+offset_right = 97.0
+offset_bottom = 65.0
+text = "create stuff
+"
+icon = SubResource("CanvasTexture_xflf0")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." node_paths=PackedStringArray("slider", "rotate", "spawnpoint")]
+position = Vector2(508, 452)
+texture = ExtResource("2_k27jn")
+script = ExtResource("3_qobqp")
+boom = ExtResource("4_wkj5j")
+slider = NodePath("../Control/HSlider")
+rotate = NodePath("rotate axis")
+spawnpoint = NodePath("rotate axis/spawn point")
+
+[node name="rotate axis" type="Node2D" parent="Sprite2D2"]
+
+[node name="spawn point" type="Node2D" parent="Sprite2D2/rotate axis"]
+position = Vector2(0, 345)
+
+[connection signal="drag_ended" from="Control/HSlider" to="Sprite2D2" method="_on_h_slider_drag_ended"]
+[connection signal="value_changed" from="Control/HSlider" to="Control/HSlider" method="_on_value_changed"]
+[connection signal="value_changed" from="Control/HSlider" to="Sprite2D2" method="_on_h_slider_value_changed"]
+[connection signal="button_down" from="Control/Button" to="Sprite2D2" method="_on_button_button_down"]
