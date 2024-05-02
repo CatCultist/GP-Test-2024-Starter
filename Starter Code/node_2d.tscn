@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bndokgtwnf7kp"]
+
+[ext_resource type="Script" path="res://parties.gd" id="1_5v1xm"]
+
+[sub_resource type="Curve" id="Curve_dfdov"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.572848, 0.783211), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_1bcou"]
+curve = SubResource("Curve_dfdov")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_evksf"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 180.0
+initial_velocity_min = 477.53
+initial_velocity_max = 713.49
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 25.0
+scale_curve = SubResource("CurveTexture_1bcou")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(0, 1)
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_evksf")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("1_5v1xm")

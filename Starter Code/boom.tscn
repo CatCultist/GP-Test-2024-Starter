@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://ba1ain1oqmywr"]
+
+[ext_resource type="Script" path="res://boom.gd" id="1_28dhj"]
+[ext_resource type="Texture2D" uid="uid://rb8smo0f45mc" path="res://icon.svg" id="1_lk0ml"]
+[ext_resource type="PackedScene" uid="uid://wetqxk2x2ohd" path="res://parties.tscn" id="2_o2vvi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6pcxv"]
+size = Vector2(124, 128)
+
+[sub_resource type="Curve" id="Curve_mkwb8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.572848, 0.783211), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vh71m"]
+curve = SubResource("Curve_mkwb8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tq6q1"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 180.0
+initial_velocity_min = 477.53
+initial_velocity_max = 713.49
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 25.0
+scale_curve = SubResource("CurveTexture_vh71m")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+script = ExtResource("1_28dhj")
+parties = ExtResource("2_o2vvi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_6pcxv")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D/CollisionShape2D"]
+texture = ExtResource("1_lk0ml")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="RigidBody2D/CollisionShape2D"]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(0, 1)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_tq6q1")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+interp_to_end = 0.101
+
+[connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="_on_body_entered"]
+[connection signal="sleeping_state_changed" from="RigidBody2D" to="RigidBody2D" method="_on_sleeping_state_changed"]
